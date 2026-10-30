@@ -26,7 +26,34 @@
 
 “全部匹配”表示当前启用栏的必含文字均已找到。结果用于辅助人工核对，不代表整份运单的全部业务要求均已满足。
 
-## 安装与启动
+## 双击使用与分享（Windows 便携版）
+
+已打包版本位于本机 `release` 目录：
+
+- 自己使用：双击 `release/铁路运单草单审核助手/铁路运单草单审核助手.exe`，也可通过桌面快捷方式打开。
+- 分享给别人：发送 `release/铁路运单草单审核助手_v1.0.0_Windows_x64.zip`，对方完整解压后双击其中的 EXE。
+- 使用者无需安装 Python 或 PySide6，也无需打开 PowerShell。单文件版启动时需要先展开内置组件，请等待窗口出现。
+- 本构建面向 Windows 10/11 x64（64 位 Intel/AMD）；尚未在其他电脑上验证，不适用于 macOS、Linux 或 32 位 Windows。
+- ZIP 同时附带使用说明、第三方许可证与可重建的源码。审核范围和结果保存方式与源码版一致。
+
+`release` 和 `build` 是本机生成目录，已通过 `.gitignore` 排除，不会随源码提交到 GitHub。源码更新后应重新打包，已有 EXE 不会自动更新。
+
+### 开发者重新打包
+
+在 `railway_waybill_helper` 目录中执行：
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-build.txt
+.\.venv\Scripts\python.exe build_windows.py
+```
+
+构建脚本固定 PyInstaller 与 Qt hooks 版本，隔离构建进程的 DLL 搜索路径，生成无控制台的单文件 EXE、分享 ZIP 和 `release/SHA256SUMS.txt`。需要排查依赖时，可先运行 `build_windows.py --onedir --console`，得到 `build/onedir` 下带诊断输出的文件夹版本。程序启动、PDF 文字提取及批量处理需要对实际构建产物进行验证。
+
+打包机制参考 [PyInstaller 官方说明](https://pyinstaller.org/en/stable/operating-mode.html)。
+
+2026-10-31 本机打包验收：正式单文件版在工作目录不含源码、移除 Python/Qt 路径变量、`PATH` 仅含 Windows 系统目录的环境下运行，窗口初始化及第 1、38 份样本提取通过，故意不匹配的要求能正确识别；后台批量任务完成 55/55，匹配 55，需复核、失败及未处理均为 0。该记录针对本机现有样本和测试要求，其他电脑尚待实际试用。
+
+## 源码安装与启动
 
 ### 运行环境
 
@@ -121,6 +148,8 @@ ZIP 的“第一份”以压缩包内部条目顺序为准，不按文件名排�
 ```text
 Russian-Lab/
 ├── README.md                         # 仓库首页：功能、安装、使用和限制
+├── .gitignore                        # 排除本机构建产物与运行环境
+├── packaging/                        # Windows 启动入口、自检、分享说明和依赖许可
 ├── railway_waybill_helper/
 │   ├── main.py                       # QApplication 与程序入口
 │   ├── main_window.py                # 桌面界面、输入校验、预览与结果展示
@@ -131,6 +160,9 @@ Russian-Lab/
 │   ├── reviewer.py                   # 文字规范化、逐行匹配与单份报告
 │   ├── batch_review.py               # QThread 批量任务、进度与批次报告
 │   ├── requirements.txt              # 固定依赖
+│   ├── requirements-build.txt        # 打包工具与 Qt hooks 版本
+│   ├── build_windows.py              # 生成 EXE、分享 ZIP、源码与校验信息
+│   ├── windows_version_info.txt      # EXE 的 Windows 版本资源
 │   ├── .gitignore                    # 忽略虚拟环境与 Python 缓存
 │   └── README.md                     # 操作与实现细节、历史开发记录
 ├── railway_waybill_helper_source.zip # 历史源码归档，日常开发以源码目录为准

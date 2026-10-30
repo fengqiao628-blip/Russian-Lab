@@ -1,0 +1,20 @@
+本程序使用 Python、PySide6 / Shiboken6、Qt（Core / Gui / Widgets / Pdf）及 PyInstaller bootloader。
+随附 licenses 目录保留上游许可证文本；这些组件的版权属于各自权利人。
+
+Python：Python Software Foundation，许可证见 Python-LICENSE.txt。
+https://www.python.org/
+
+PySide6 / Shiboken6 / Qt：The Qt Company 及贡献者。
+本构建使用公开发布的 PySide6 6.10.1 组件。Qt 的开源许可文本见 LGPL-3.0-only.txt 和 GPL-3.0-only.txt；同时保留发行包附带的许可说明。
+PySide6 / Shiboken6 源码：https://code.qt.io/cgit/pyside/pyside-setup.git/tag/?h=v6.10.1
+Qt 源码：https://download.qt.io/archive/qt/6.10/6.10.1/submodules/
+Qt PDF 授权与第三方组件：https://doc.qt.io/qt-6.10/qtpdf-licensing.html
+Qt PDF 的 PDFium 上游许可见 PDFium-LICENSE.txt。
+
+PyInstaller：许可证及 bootloader 例外见 licenses/PyInstaller。
+https://pyinstaller.org/
+
+程序源码与打包脚本随包提供在“源码与打包脚本.zip”中，也可从以下仓库取得：
+https://github.com/fengqiao628-blip/Russian-Lab
+如需重建或替换兼容版本的 Qt/PySide6，请解压源码，按照 README 的构建步骤重新打包。
+这里的第三方声明不更改应用源码或第三方组件各自的许可。
